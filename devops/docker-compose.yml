@@ -1,0 +1,10 @@
+version: '2'
+services:
+  postgress-postgresql:
+    image: postgres:14.6
+    environment:
+      - POSTGRES_DB=fastapi-sqlalchemy
+      - POSTGRES_USER=joel
+      - POSTGRES_PASSWORD=joeljacob
+    ports:
+      - 5432:5432
