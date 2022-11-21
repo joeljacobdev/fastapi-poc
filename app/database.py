@@ -7,7 +7,9 @@ Base = declarative_base()
 POSTGRES_DSN = "postgresql+asyncpg://joel:joeljacob@0.0.0.0:5432/fastapi-sqlalchemy"
 engine = create_async_engine(POSTGRES_DSN, echo=True, future=True)
 async_session = scoped_session(
-    sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False, future=True)
+    sessionmaker(
+            bind=engine, class_=AsyncSession, expire_on_commit=False, future=True
+        )
 )
 
 
