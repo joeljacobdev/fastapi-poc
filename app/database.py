@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 
 Base = declarative_base()
 
-POSTGRES_DSN = "postgresql+asyncpg://joel:joeljacob@0.0.0.0:5432/fastapi-sqlalchemy"
+POSTGRES_DSN = "postgresql+asyncpg://joel:joeljacob@0.0.0.0:9500/fastapi-sqlalchemy"
 engine = create_async_engine(POSTGRES_DSN, echo=True, future=True)
 async_session = scoped_session(
     sessionmaker(

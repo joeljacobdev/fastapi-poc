@@ -7,4 +7,4 @@ services:
       - POSTGRES_USER=joel
       - POSTGRES_PASSWORD=joeljacob
     ports:
-      - 5432:5432
+      - 9500:5432
