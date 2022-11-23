@@ -48,7 +48,6 @@ class Course(DateMixin, Base):
     students = association_proxy("course_students", "student")
 
 
-# thru
 class StudentCourse(DateMixin, Base):
     __tablename__ = "app__student_course"
     __table_args__ = (

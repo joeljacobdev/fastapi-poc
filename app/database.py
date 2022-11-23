@@ -11,6 +11,7 @@ async_session = scoped_session(
             bind=engine, class_=AsyncSession, expire_on_commit=False, future=True
         )
 )
+""":type: sqlalchemy.orm.AsyncSession"""
 
 
 async def get_db_session() -> AsyncSession:

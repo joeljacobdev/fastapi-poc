@@ -13,7 +13,7 @@ asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 app = FastAPI()
 app.include_router(app_router.router)
 
+
 @app.on_event("startup")
 async def on_startup():
     await init_database()
-
