@@ -12,6 +12,7 @@ sqlalchemy = {version = "==1.4.44", extras = ["asyncio"]}
 uvloop = "==0.17.0"
 opensearch-dsl = "==2.0.1"
 sqladmin = "==0.8.0"
+gunicorn = "==20.1.0"
 
 [dev-packages]
 
