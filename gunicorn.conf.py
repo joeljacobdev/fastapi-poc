@@ -67,7 +67,7 @@ backlog = 1024
 
 workers = 2
 worker_class = "uvicorn.workers.UvicornWorker"
-worker_connections = 1000
+worker_connections = 200
 timeout = 30
 keepalive = 2
 
