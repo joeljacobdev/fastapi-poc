@@ -52,36 +52,41 @@ async def setup(session: AsyncSession = Depends(get_db_session)):
 @router.get("/m2m")
 async def m2m(session: AsyncSession = Depends(get_db_session)):
     student_id = 1
-    statement = select(app_schemas.Student).where(
-        app_schemas.Student.id == student_id
-    ).options(
-        joinedload(
-            app_schemas.Student.student_courses
-        ).options(
-            joinedload(app_schemas.StudentCourse.course)
+    statement = (
+        select(app_schemas.Student)
+        .where(app_schemas.Student.id == student_id)
+        .options(
+            joinedload(app_schemas.Student.student_courses).options(
+                joinedload(app_schemas.StudentCourse.course)
+            )
         )
     )
     result = await session.execute(statement)
     return result.unique().all()
 
 
-@router.get('/array_agg')
+@router.get("/array_agg")
 async def array_agg(session: AsyncSession = Depends(get_db_session)):
     college_id = 2
-    statement = select(
-        app_schemas.College.name,
-        func.array_agg(app_schemas.Course.id, type_=ARRAY(Integer)).label('course_ids')
-    ).outerjoin(
-        app_schemas.DepartmentBatch, app_schemas.DepartmentBatch.college_id == app_schemas.College.id
-    ).outerjoin(
-        app_schemas.Course, app_schemas.Course.department_batch_id == app_schemas.DepartmentBatch.id
-    ).where(
-        app_schemas.College.id == college_id
-    ).group_by(app_schemas.College.id)
+    statement = (
+        select(
+            app_schemas.College.name,
+            func.array_agg(app_schemas.Course.id, type_=ARRAY(Integer)).label(
+                "course_ids"
+            ),
+        )
+        .outerjoin(
+            app_schemas.DepartmentBatch,
+            app_schemas.DepartmentBatch.college_id == app_schemas.College.id,
+        )
+        .outerjoin(
+            app_schemas.Course,
+            app_schemas.Course.department_batch_id == app_schemas.DepartmentBatch.id,
+        )
+        .where(app_schemas.College.id == college_id)
+        .group_by(app_schemas.College.id)
+    )
     result = await session.execute(statement)
     result = result.one()
     course_ids = result[1] if result else []
-    return {
-        'college_id': college_id,
-        'course_ids': course_ids
-    }
+    return {"college_id": college_id, "course_ids": course_ids}
